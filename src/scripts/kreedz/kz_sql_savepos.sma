@@ -1,4 +1,5 @@
 #include <amxmodx>
+#include <amxmisc>
 #include <sqlx>
 
 #include <kreedz_api>
@@ -116,10 +117,33 @@ DELETE FROM `kz_savedruns` WHERE `uid` = %d AND `mapid` = %d;",
 		g_UserData[id][ud_hasSavedRun] = true;
 
 		setLoadedRun(id);
+
+		set_task_ex(2.0, "task_informPlayerOfLoadedRun", id);
+	} else {
+		set_task_ex(3.0, "task_informPlayerOfRunSave", id);
 	}
 
 	SQL_FreeHandle(hQuery);
 	return PLUGIN_HANDLED;
+}
+
+public task_informPlayerOfLoadedRun(id) {
+	new szMap[64];
+	new iMin, iSec, iMS;
+
+	get_mapname(szMap, charsmax(szMap));
+
+	UTIL_TimeToSec(g_UserData[id][ud_SavedTime], iMin, iSec, iMS);
+
+	client_print_color(
+		id, print_team_default, "%L", id, "KZ_CHAT_RUN_LOADED",
+		szMap, iMin, iSec, iMS,
+		g_UserData[id][ud_SavedChecksNum], g_UserData[id][ud_SavedTeleNum]
+	);
+}
+
+public task_informPlayerOfRunSave(id) {
+	client_print_color(id, print_team_default, "%L", id, "KZ_CHAT_RUNS_ARE_SAVED");
 }
 
 setLoadedRun(id) {
