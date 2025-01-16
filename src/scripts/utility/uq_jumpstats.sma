@@ -895,7 +895,7 @@ stock kz_make_cvarexec(const config[])
 	fprintf(f, "kz_uq_sounds %i^n",uq_sounds);
 	fprintf(f, "^n");
 	
-	fprintf(f, "// Allow doing ScreenShot if Player going in Top (not work with kz_uq_sql <1> and for map top)^n");
+	fprintf(f, "// Allow doing ScreenShot if Player going in Top (not work with kz_uq_sql <1>)^n");
 	fprintf(f, "kz_uq_screenshoot %i^n",uq_screen);
 	fprintf(f, "^n");
 	
@@ -5033,11 +5033,6 @@ public fwdPreThink( id )
 						new tmp_type_num=-1;
 						
 						//saving tops
-						if(!ddstandcj[id] && !CjafterJump[id] && jump_type[id]!=Type_None && jump_type[id]!=Type_Null && jump_type[id]!=Type_Nothing && jump_type[id]!=Type_Nothing2 && Pmaxspeed==250.0 && kz_top==1 && kz_map_top==1)
-						{
-							checkmap( id, distance[id], maxspeed[id], prestrafe[id], strafe_num[id], sync_[id],Jtype1[id]); 
-						}
-						
 						if(!CjafterJump[id] && jump_type[id]==Type_Double_CountJump && kz_top==1 && uq_dcj==1) 
 						{
 							if(kz_sql==0) 
@@ -7737,73 +7732,6 @@ public checktops_weapon(id,pev_max_speed,wpn_rank,type[],type_num,Float:dd,Float
 			break;
 		}
 		else if( equali(tmp_ip[i], rb)) break;	
-	}
-}
-public checkmap(id,Float:dd,Float:mm,Float:pp,sf,s,typ[]) 
-{	new d,m,p,rb[64];
-	
-	d=floatround(dd*1000000);// todo: zdelat poproshe)
-	m=floatround(mm*1000000);
-	p=floatround(pp*1000000);
-	
-	switch(rankby) {
-		case 0: {
-			formatex(rb, 63, "%s", g_playername[id]);
-		}
-		case 1: {
-			formatex(rb, 63, "%s", g_playerip[id]);
-		}
-		case 2: {
-			formatex(rb, 63, "%s", g_playersteam[id]);
-		}
-	}
-
-	for (new i = 0; i < NTOP; i++)
-	{
-		if( d > map_dist[i] )
-		{
-			new pos = i;	
-			while( !equali(map_ip[pos],rb) && pos < NTOP )
-			{
-				pos++;
-			}
-			
-			for (new j = pos; j > i; j--)
-			{
-				formatex(map_ip[j], 32, map_ip[j-1]);
-				formatex(map_names[j], 32, map_names[j-1]);
-				map_dist[j] = map_dist[j-1];
-				map_maxsped[j] =map_maxsped[j-1];
-				map_prestr[j] = map_prestr[j-1];
-				map_streif[j] = map_streif[j-1];
-				map_syncc[j] = map_syncc[j-1];
-				formatex(map_type[j], 32, map_type[j-1]);
-			}
-			
-			formatex(map_ip[i], 32, rb);
-			formatex(map_names[i], 32, g_playername[id]);
-			map_dist[i]=d;
-			map_maxsped[i] = m;
-			map_prestr[i] = p;
-			map_streif[i] = sf;
-			map_syncc[i] = s;
-			formatex(map_type[i], 32, typ);
-			
-			save_maptop();
-			
-			new iPlayers[32],iNum; 
-			get_players( iPlayers, iNum,"ch") ;
-			for(new p=0;p<iNum;p++) 
-			{ 
-				new ids=iPlayers[p]; 
-				if(gHasColorChat[ids] ==true)
-				{	
-					client_print(ids,print_chat,"%L",LANG_SERVER,"UQSTATS_PRINTTOP5",prefix,g_playername[id],(i+1),dd,typ);	
-				}
-			}
-			break;
-		}
-		else if( equali(map_ip[i], rb)) break;	
 	}
 }
 public fwdPostThink( id ) 
