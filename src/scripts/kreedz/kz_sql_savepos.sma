@@ -92,9 +92,8 @@ DELETE FROM `kz_savedruns` WHERE `uid` = %d AND `mapid` = %d;",
 		}
 	}
 
+	new id = szData[0];
 	if (SQL_NumResults(hQuery) > 0) {
-		new id = szData[0];
-
 		g_UserData[id][ud_SavedTime] = Float:SQL_ReadResult(hQuery, 2);
 		g_UserData[id][ud_SavedChecksNum] = SQL_ReadResult(hQuery, 4);
 		g_UserData[id][ud_SavedTeleNum] = SQL_ReadResult(hQuery, 5);
