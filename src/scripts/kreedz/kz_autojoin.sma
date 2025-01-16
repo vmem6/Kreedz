@@ -90,7 +90,8 @@ public Task_JoinTeam(id) {
 public Task_Spawn(id) {
 	if (!is_user_connected(id)) return;
 
-	dllfunc(DLLFunc_Spawn, id);
+  if (!is_user_alive(id))
+    dllfunc(DLLFunc_Spawn, id);
 	
 	kz_get_usp(id);
 
