@@ -50,7 +50,7 @@ new g_iVotes;
 new g_iOrigin[MAX_PLAYERS + 1][3];
 new Float:g_fLastMovedOn[MAX_PLAYERS + 1];
 new bool:g_bAfk[MAX_PLAYERS + 1];
-new g_iAfkNum;
+new g_iAfkNum = 0;
 
 new g_sPrefix[48];
 
@@ -190,8 +190,10 @@ public check_afk()
             g_iOrigin[pid][1] = origin[1];
             g_iOrigin[pid][2] = origin[2];
             g_fLastMovedOn[pid] = time;
-            g_bAfk[pid] = false;
-            g_iAfkNum--;
+            if(g_bAfk[pid]) {
+                g_bAfk[pid] = false;
+                g_iAfkNum--;
+            }
         }
     }
 }
