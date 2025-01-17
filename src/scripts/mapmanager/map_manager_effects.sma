@@ -106,7 +106,7 @@ public mapm_countdown(type, time)
     if(type == COUNTDOWN_PREPARE) {
         // hud timer
         new players[32], pnum; get_players(players, pnum, "ch");
-        set_hudmessage(50, 255, 50, -1.0, 0.3, 0, 0.0, 1.0, 0.0, 0.0, 4);
+        set_hudmessage(255, 255, 255, 0.3, 0, 0.0, 1.0, 0.0, 0.0, 4);
         for(new i, id; i < pnum; i++) {
             id = players[i];
             show_hudmessage(id, "%L %L!", id, "MAPM_HUD_TIMER", time, id, "MAPM_SECONDS");
