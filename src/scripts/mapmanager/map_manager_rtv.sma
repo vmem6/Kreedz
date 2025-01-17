@@ -1,4 +1,5 @@
 #include <amxmodx>
+#include <amxmisc>
 #include <map_manager>
 #include <map_manager_scheduler>
 
@@ -17,6 +18,11 @@
 #endif
 
 #define get_num(%0) get_pcvar_num(g_pCvars[%0])
+#define get_float(%0) get_pcvar_float(g_pCvars[%0])
+
+enum (+=100) {
+    TASK_CHECK_AFK
+};
 
 enum Cvars {
     MODE,
@@ -25,7 +31,10 @@ enum Cvars {
     DELAY,
     CHANGE_AFTER_VOTE,
     CHANGE_TYPE,
-    ALLOW_EXTEND
+    ALLOW_EXTEND,
+    IGNORE_SPECTATORS,
+    IGNORE_AFK,
+    AFK_TIME_THRESHOLD
 };
 
 enum {
@@ -37,6 +46,11 @@ new g_pCvars[Cvars];
 new g_iMapStartTime;
 new bool:g_bVoted[33];
 new g_iVotes;
+
+new g_iOrigin[MAX_PLAYERS + 1][3];
+new Float:g_fLastMovedOn[MAX_PLAYERS + 1];
+new bool:g_bAfk[MAX_PLAYERS + 1];
+new g_iAfkNum;
 
 new g_sPrefix[48];
 
@@ -50,17 +64,28 @@ public plugin_init()
     g_pCvars[PLAYERS] = register_cvar("mapm_rtv_players", "5");
     g_pCvars[DELAY] = register_cvar("mapm_rtv_delay", "0"); // minutes
     g_pCvars[ALLOW_EXTEND] = register_cvar("mapm_rtv_allow_extend", "0"); // 0 - disable, 1 - enable
+    g_pCvars[IGNORE_SPECTATORS] = register_cvar("mapm_rtv_ignore_spectators", "0"); // 0 - disable, 1 - enable
+    g_pCvars[IGNORE_AFK] = register_cvar("mapm_rtv_ignore_afk", "0"); // 0 - disable, 1 - enable
+    g_pCvars[AFK_TIME_THRESHOLD] = register_cvar("mapm_rtv_afk_time_threshold", "15.0"); // seconds
 
     register_clcmd("say rtv", "clcmd_rtv");
     register_clcmd("say /rtv", "clcmd_rtv");
 
     // reset it with sv_restart?
     g_iMapStartTime = get_systime();
+
+    set_task_ex(1.0, "check_afk", TASK_CHECK_AFK, .flags = SetTask_Repeat);
 }
 public plugin_cfg()
 {
     mapm_get_prefix(g_sPrefix, charsmax(g_sPrefix));
     g_pCvars[CHANGE_TYPE] = get_cvar_pointer("mapm_change_type");
+}
+public client_putinserver(id)
+{
+  get_user_origin(id, g_iOrigin[id]);
+  g_fLastMovedOn[id] = get_gametime();
+  g_bAfk[id] = false;
 }
 public client_disconnected(id)
 {
@@ -68,6 +93,11 @@ public client_disconnected(id)
         g_bVoted[id] = false;
         g_iVotes--;
     }
+    if(g_bAfk[id]) {
+        g_bAfk[id] = false;
+        g_iAfkNum--;
+    }
+    attempt_vote_start();
 }
 public clcmd_rtv(id)
 {
@@ -86,15 +116,11 @@ public clcmd_rtv(id)
         g_iVotes++;
     }
 
-    new need_votes;
-    if(get_num(MODE) == MODE_PERCENTS) {
-        need_votes = floatround(get_players_num() * get_num(PERCENT) / 100.0, floatround_ceil) - g_iVotes;
-    } else {
-        need_votes = get_num(PLAYERS) - g_iVotes;
-    }
+    new need_votes = 0;
+    new ignored_spec = 0;
+    new ignored_afk = 0;
 
-    if(need_votes <= 0) {
-        map_scheduler_start_vote(VOTE_BY_RTV);
+    if (attempt_vote_start(need_votes, ignored_spec, ignored_afk)) {
         return PLUGIN_HANDLED;
     }
 
@@ -125,4 +151,100 @@ public mapm_vote_finished(const map[], type, total_votes)
     if(type == VOTE_BY_RTV && get_num(CHANGE_TYPE) && get_num(CHANGE_AFTER_VOTE)) {
         intermission();
     }
+}
+public check_afk()
+{
+    if(!get_num(IGNORE_SPECTATORS)) {
+        return;
+    }
+
+    new players[MAX_PLAYERS];
+    new pnum;
+    get_players_ex(players, pnum, GetPlayers_ExcludeBots | GetPlayers_ExcludeHLTV);
+
+    new Float:time = get_gametime();
+    new Float:afk_threshold = get_float(AFK_TIME_THRESHOLD);
+
+    new origin[3];
+    for(new i = 0; i != pnum; i++) {
+        new pid = players[i];
+        if(!is_user_alive(pid)) {
+            if(g_bAfk[pid]) {
+                g_bAfk[pid] = false;
+                g_iAfkNum--;
+            }
+            continue;
+        }
+
+        get_user_origin(pid, origin);
+        if(origin[0] == g_iOrigin[pid][0] && origin[1] == g_iOrigin[pid][1] && origin[2] == g_iOrigin[pid][2]) {
+            if(!g_bAfk[pid] && time - g_fLastMovedOn[pid] > afk_threshold) {
+                g_bAfk[pid] = true;
+                g_iAfkNum++;
+                attempt_vote_start();
+            }
+        } else {
+            g_iOrigin[pid][0] = origin[0];
+            g_iOrigin[pid][1] = origin[1];
+            g_iOrigin[pid][2] = origin[2];
+            g_fLastMovedOn[pid] = time;
+            g_bAfk[pid] = false;
+            g_iAfkNum--;
+        }
+    }
+}
+bool:attempt_vote_start(&need_votes = 0, &ignored_spec = 0, &ignored_afk = 0)
+{
+    if(g_iVotes == 0) {
+        return false;
+    }
+
+    new pnum = get_pnum(ignored_spec, ignored_afk);
+    if(get_num(MODE) == MODE_PERCENTS) {
+        need_votes = floatround(pnum * get_num(PERCENT) / 100.0, floatround_ceil) - g_iVotes;
+    } else {
+        need_votes = min(get_num(PLAYERS), pnum) - g_iVotes;
+    }
+
+    if(need_votes <= 0) {
+        map_scheduler_start_vote(VOTE_BY_RTV);
+        return true;
+    }
+
+    return false;
+}
+get_pnum(&ignored_spec = 0, &ignored_afk = 0)
+{
+    static maxplayers;
+    if(!maxplayers) {
+        maxplayers = get_maxplayers();
+    }
+
+    new ignore_spec = get_num(IGNORE_SPECTATORS);
+    ignored_spec = 0;
+
+    new pnum = 0;
+    for(new i = 1; i <= maxplayers; i++) {
+        if(!is_user_connected(i)
+            || is_user_bot(i)
+            || is_user_hltv(i)) {
+            continue;
+        }
+        if (ignore_spec) {
+            new team = get_user_team(i);
+            if(team == 0 || team == 3) {
+                ignored_spec++;
+                continue;
+            }
+        }
+        pnum++;
+    }
+    if(get_num(IGNORE_AFK)) {
+        pnum -= g_iAfkNum;
+        ignored_afk = g_iAfkNum;
+    } else {
+        ignored_afk = 0;
+    }
+
+    return pnum;
 }
