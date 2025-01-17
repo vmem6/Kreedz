@@ -83,9 +83,9 @@ public plugin_cfg()
 }
 public client_putinserver(id)
 {
-  get_user_origin(id, g_iOrigin[id]);
-  g_fLastMovedOn[id] = get_gametime();
-  g_bAfk[id] = false;
+    get_user_origin(id, g_iOrigin[id]);
+    g_fLastMovedOn[id] = get_gametime();
+    g_bAfk[id] = false;
 }
 public client_disconnected(id)
 {
@@ -127,9 +127,11 @@ public clcmd_rtv(id)
     if(!g_bVoted[id]) {
         g_bVoted[id] = true;
         new name[32]; get_user_name(id, name, charsmax(name));
-        client_print_color(0, print_team_default, "%s^3 %L.", g_sPrefix, LANG_PLAYER, "MAPM_RTV_VOTED", name, need_votes);
+        client_print_color(0, print_team_default, "%s^3 %L.", g_sPrefix, LANG_PLAYER, "MAPM_RTV_VOTED",
+            name, need_votes, ignored_spec, ignored_afk);
     } else {
-        client_print_color(id, print_team_default, "%s^1 %L.", g_sPrefix, id, "MAPM_RTV_ALREADY_VOTED", need_votes);
+        client_print_color(id, print_team_default, "%s^1 %L.", g_sPrefix, id, "MAPM_RTV_ALREADY_VOTED",
+            need_votes, ignored_spec, ignored_afk);
     }
 
     return PLUGIN_HANDLED;
