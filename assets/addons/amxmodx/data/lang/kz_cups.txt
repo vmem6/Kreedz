@@ -99,3 +99,54 @@ CUPS_STATUS_INACTIVE = 不处理
 CUPS_STATUS_PENDING = 待处理
 CUPS_STATUS_WAITING = 等待
 CUPS_STATUS_STARTED = 已开始
+
+[lt]
+CUPS_MAIN_TITLE = \yCup'ų meniu
+CUPS_MAIN_LIST = \wGrupių sąrašas
+CUPS_MAIN_CREATE = \wSukurti grupę
+CUPS_MAIN_LOBBY = \wMano grupė
+CUPS_MAIN_INVITES = \wPakvietimai
+
+CUPS_LIST_TITLE = Grupių sąrašas:
+CUPS_INVITES_TITLE = Mano pakvietimai:
+
+CUPS_LOBBY_TITLE = %s
+CUPS_LOBBY_INVITE = Kviesti žaidėjus
+CUPS_LOBBY_KICK = Išmesti žaidėjus
+CUPS_LOBBY_CREATE = Sukurti grupę
+CUPS_LOBBY_DELETE = Ištrinti grupę
+CUPS_LOBBY_STARTMATCH = Pradėti match'ą
+CUPS_LOBBY_ENDMATCH = Baigti match'ą
+CUPS_LOBBY_ROOMTYPE = Kambario tipas
+CUPS_LOBBY_LOCKED = užrakinta
+CUPS_LOBBY_OPEN = atvira
+CUPS_LOBBY_JOIN = Prisijungti
+CUPS_LOBBY_LEAVE = Išeiti
+CUPS_LOBBY_DECLINE = Atmesti pakvietimą
+CUPS_LOBBY_CHECKS = Checkpoint'ai
+CUPS_LOBBY_PLAYERSLIST = Žaidėjų sąrašas
+CUPS_LOBBY_NUMSLOTS = Vietos
+
+CUPS_INVITEPLAYERS_TITLE = Kviesti žaidėjus:
+CUPS_KICKPLAYERS_TITLE = Išmesti žaidėjus:
+
+CUPS_ENABLE = Įjungti
+CUPS_DISABLE = Išjungti
+
+CUPS_CHAT_INVITED = ^4[KZ] ^1Buvai pakviesta/-s į ^4%s^1.
+CUPS_CHAT_INVITED_SENT = ^4[KZ] ^1Pakvietimas išsiųstas ^4%s^1.
+CUPS_CHAT_KICKED_PLAYER = ^4[KZ] ^1Buvai išmesta/-s iš ^4%s^1.
+CUPS_CHAT_KICKED_LOBBY = ^4[KZ] ^1^4%s^1 buvo išmesta/-s iš grupės.
+CUPS_CHAT_JOIN_LOBBY = ^4[KZ] ^4%s^1 prisijungė prie grupės.
+CUPS_CHAT_LEAVE_LOBBY = ^4[KZ] ^4%s^1 paliko grupę.
+CUPS_CHAT_LOBBY_DELETED = ^4[KZ] ^1Grupė buvo ištrinta.
+CUPS_CHAT_MATCH_END = ^4[KZ] ^1Match'as pasibaigė.
+CUPS_CHAT_WON = ^4[KZ] ^4%s ^1laimėjo cup'ą, finišuodama/-s ^4%s^1.
+CUPS_CHAT_FINISHED = ^4[KZ] ^4%s ^1baigė cup'ą, finišuodama/-s ^4%s ^1[+^3%s^1].
+CUPS_CHAT_AUTOEND = ^4[KZ] ^1Cup'as automatiškai pasibaigs po ^4%d ^1sekundės/-žių.
+CUPS_CHAT_NO_START_POS = ^4[KZ] ^1Prašome paspausti starto mygtuką, kad nustatyti starto poziciją.
+
+CUPS_STATUS_INACTIVE = Neaktyvus
+CUPS_STATUS_PENDING =  Laukiama
+CUPS_STATUS_WAITING = Laukiama
+CUPS_STATUS_STARTED = Pradėtas

@@ -77,6 +77,11 @@ KZ_CHAT_SET_START_POS_FAIL = ^4[KZ] ^1You must be alive for this action.
 KZ_CHAT_SET_START_POS_SAVED = ^4[KZ] ^1New start position set.
 KZ_CHAT_SET_START_POS_RESETED = ^4[KZ] ^1Start position has reset.
 
+KZ_CVARS_BAD_CVAR_INT_EXACT = Bad %s (%s) - must be: %d
+KZ_CVARS_BAD_CVAR_INT_RANGE = Bad %s (%s) - must be: [%d, %d]
+KZ_CVARS_BAD_CVAR_FLOAT_EXACT = Bad %s (%s) - must be: %.1f
+KZ_CVARS_BAD_CVAR_FLOAT_RANGE = Bad %s (%s) - must be: [%.1f, %.1f]
+
 [ru]
 KZ_HUD_CANT_SAVE = Невозможно сохраниться в воздухе
 KZ_HUD_CANT_TELEPORT = У вас нет сохранений
@@ -156,6 +161,11 @@ KZ_CHAT_SET_START_POS_FAIL = ^4[KZ] ^1Вы должны быть живы для
 KZ_CHAT_SET_START_POS_SAVED = ^4[KZ] ^1Новая стартовая позиция задана.
 KZ_CHAT_SET_START_POS_RESETED = ^4[KZ] ^1Стартовая позиция была сброшена.
 
+KZ_CVARS_BAD_CVAR_INT_EXACT = Плохой %s (%s) - должен быть: %d
+KZ_CVARS_BAD_CVAR_INT_RANGE = Плохой %s (%s) - должен быть: [%d, %d]
+KZ_CVARS_BAD_CVAR_FLOAT_EXACT = Плохой %s (%s) - должен быть: %.1f
+KZ_CVARS_BAD_CVAR_FLOAT_RANGE = Плохой %s (%s) - должен быть: [%.1f, %.1f]
+
 [cn]
 KZ_HUD_CANT_SAVE = 禁止空中存点
 KZ_HUD_CANT_TELEPORT = 无存点信息
@@ -234,3 +244,92 @@ STARTPOSMENU_RESET = 重置起点位置
 KZ_CHAT_SET_START_POS_FAIL = ^4[KZ] ^1你必须活着才能执行该操作.
 KZ_CHAT_SET_START_POS_SAVED = ^4[KZ] ^1新的起点已设置.
 KZ_CHAT_SET_START_POS_RESETED = ^4[KZ] ^1起点位置已重置.
+
+KZ_CVARS_BAD_CVAR_INT_EXACT = 坏的 %s (%s) - 必须: %d
+KZ_CVARS_BAD_CVAR_INT_RANGE = 坏的 %s (%s) - 必须: [%d, %d]
+KZ_CVARS_BAD_CVAR_FLOAT_EXACT = 坏的 %s (%s) - 必须: %.1f
+KZ_CVARS_BAD_CVAR_FLOAT_RANGE = 坏的 %s (%s) - 必须: [%.1f, %.1f]
+
+[lt]
+KZ_HUD_CANT_SAVE = Pozicijos saugot ore negalima
+KZ_HUD_CANT_TELEPORT = Neturi checkpoint'ų
+
+KZ_CHAT_FINISHED = ^4[KZ] ^1%s užbaigė map'ą. Laikas: %02d:%02d.%02d (%d/%d). Ginklas: %s
+
+KZ_CHAT_NO_PRO_RECORDS = ^4[KZ] ^1Map'as neturi pro rekordų.
+KZ_CHAT_NO_NUB_RECORDS = ^4[KZ] ^1Map'as neturi nub rekordų.
+KZ_CHAT_NO_WEAPON_RECORDS = ^4[KZ] ^1Map'as neturi rekordų su %s.
+
+KZ_CHAT_BEAT_RECORD = ^4[KZ] ^1[-^4%s^1].
+KZ_CHAT_LOSE_RECORD = ^4[KZ] ^1[+^3%s^1].
+
+KZ_CHAT_BEST_PRO = ^4[KZ] ^1Tavo geriausias run'as yra %s (0/0).
+KZ_CHAT_BEST_NUB = ^4[KZ] ^1Tavo geriausias run'as yra %s (%d/%d).
+KZ_CHAT_NO_RECORD = ^4[KZ] ^1Tu neturi run'ų šiame map'e.
+
+KZ_CHAT_REC_PRO = ^4[KZ] ^1Pro rekordas: [^4%s^1] - ^3%s^1.
+KZ_CHAT_REC_NO_DATA = ^4[KZ] ^1Pro rekordas: ^3Nėra duomenų^1.
+
+KZ_CHAT_RUN_LOADED = ^4[KZ] ^1Užkrautas išsaugotas ^3%s ^1run'as: %02d:%02d.%02d (%d/%d).
+KZ_CHAT_RUNS_ARE_SAVED = ^4[KZ] ^1Run'ai yra automatiškai išsaugojami atsijungimo metu.
+
+MAINMENU_TITLE = Meniu
+MAINMENU_CP = Checkpoint
+MAINMENU_TP = Teleport
+MAINMENU_PAUSE = Sustabdyti / paleisti
+MAINMENU_START = Startas
+MAINMENU_NOCLIP = Noclip
+MAINMENU_SPEC = Spec
+MAINMENU_INVIS = Invis
+MAINMENU_LJS = Ljsmenu
+MAINMENU_SETTINGS = Nustatymai
+MAINMENU_MUTE = Mute
+MAINMENU_WEAPONS = Gauti ginklus
+
+INVISMENU_TITLE = Nematomumas
+INVISMENU_PLAYERS = Žaidėjai
+INVISMENU_WATER = Vanduo
+INVISMENU_DRAW = \rRodyti
+INVISMENU_HIDE = \dSlėpti
+
+SPECLIST_TITLE = Stebėtojai (%d):
+
+GOTOMENU_TITLE = Teleportuotis prie žaidėjo:
+GOTOMENU_ALLOWED = \w%s
+GOTOMENU_FORBIDDEN = \d%s
+GOTO_TELEPORTED_TO_CHAT = ^4[KZ] ^1Atsiteleportavai prie ^3%s^1.
+GOTO_FORBIDDEN_CHAT = ^4[KZ] ^1Tu negali teleportuotis prie ^3%s^1.
+
+SETTINGSMENU_TITLE = \yKZ Nustatymai
+SETTINGSMENU_OPT_ANGLES_NONE = Kampų saugojimo režimas: \djoks
+SETTINGSMENU_OPT_ANGLES_ONLY_TP = Kampų saugojimo režimas: \yteleporto metu
+SETTINGSMENU_OPT_ANGLES_ONLY_START = Kampų saugojimo režimas: \ystarto metu
+SETTINGSMENU_OPT_ANGLES_START_AND_TP = Kampų saugojimo režimas: \rteleporto ir starto metu
+SETTINGSMENU_OPT_INVIS_DISABLE = Invis: \dišjungtas
+SETTINGSMENU_OPT_INVIS_PLAYERS = Invis: \yslėpti žaidėjus
+SETTINGSMENU_OPT_INVIS_WATER = Invis: \yslėpti vandenį
+SETTINGSMENU_OPT_INVIS_PL_AND_WATER = Invis: \yslėpti vandenį ir žaidėjus
+SETTINGSMENU_OPT_SHOWMENU = Rodyti meniu prisijungimo metu
+SETTINGSMENU_OPT_STOPSOUND = Sustabdyti garsus prisijungimo metu
+SETTINGSMENU_OPT_SPECLIST = Rodyti stebėtojų sąrašą
+SETTINGSMENU_OPT_HOOKSPEED = Hook greitis: \y%.0f \du/s
+SETTINGSMENU_OPT_NOCLIPSPEED = Noclip greitis: \y%.0f \du/s
+SETTINGSMENU_OPT_FOG = Rodyti Frames on ground (FOG)
+SETTINGSMENU_OPT_GOTO = Leisti kitiems teleportuotis prie tavęs
+SETTINGSMENU_OPT_RADIO = Radijo komandos
+SETTINGSMENU_OPT_MKEY_OPEN_MENU = M mygtuko veiksmas: \ratidaryti meniu
+SETTINGSMENU_OPT_MKEY_SPEC_CT = M mygtuko veiksmas: \yeiti į spec/ct
+SETTINGSMENU_ENABLE = įjungta
+SETTINGSMENU_DISABLE = išjungta
+
+STARTPOSMENU_TITLE = \ySaugoti starto poziciją:
+STARTPOSMENU_SAVE = Saugoti dabartinę poziciją
+STARTPOSMENU_RESET = Nustatyti starto poziciją iš naujo
+KZ_CHAT_SET_START_POS_FAIL = ^4[KZ] ^1Privalai būti gyvas, norint atlikti šį veiksmą.
+KZ_CHAT_SET_START_POS_SAVED = ^4[KZ] ^1Nauja starto pozicija nustatyta.
+KZ_CHAT_SET_START_POS_RESETED = ^4[KZ] ^1Starto pozicija buvo iš naujo nustatyta
+
+KZ_CVARS_BAD_CVAR_INT_EXACT = Blogas %s (%s) - privalo būti: %d
+KZ_CVARS_BAD_CVAR_INT_RANGE = Blogas %s (%s) - privalo būti: [%d, %d]
+KZ_CVARS_BAD_CVAR_FLOAT_EXACT = Blogas %s (%s) - privalo būti: %.1f
+KZ_CVARS_BAD_CVAR_FLOAT_RANGE = Blogas %s (%s) - privalo būti: [%.1f, %.1f]
